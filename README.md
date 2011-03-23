@@ -19,7 +19,7 @@ vmadmin ALL = (root) NOPASSWD: /usr/bin/virsh</code></pre>
 3. For every one of your users, create a line in vmadmin's .ssh/authorized_keys
    using their SSH public keys:
 
-       command="/usr/local/bin/virssh myfancyvm",permitopen="localhost:5915",no-X11-forwarding,no-agent-forwarding ssh-rsa AAAAB...== myfancyuser@hjome
+<pre><code>command="/usr/local/bin/virssh myfancyvm",permitopen="localhost:5915",no-X11-forwarding,no-agent-forwarding ssh-rsa AAAAB...== myfancyuser@home</code></pre>
 
    Instead of specifying only one VM "myfancyvm", you may also specify multiple
    VMs by regex, for example "(myfancyvm|myothervm)".
