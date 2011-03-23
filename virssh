@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+my $logtag = $0;
+my $vm = $ARGV[0];
+my $SSH_ORIGINAL_COMMAND = $ENV{"SSH_ORIGINAL_COMMAND"} || "";
+
+if ($SSH_ORIGINAL_COMMAND =~ /^sudo virsh (list|console $vm|destroy $vm|shutdown $vm|start $vm( --console)?)$/s) {
+  system("logger", "-t", "$logtag", "Allowing command \"$SSH_ORIGINAL_COMMAND\"");
+  exec $SSH_ORIGINAL_COMMAND
+} else {
+  system("logger", "-t", "$logtag", "ALERT: NOT allowing command \"$SSH_ORIGINAL_COMMAND\"");
+  print STDERR "ALERT: NOT allowing command \"$SSH_ORIGINAL_COMMAND\"\n";
+  print STDERR <<EOF;
+Allowed commands for you are:
+
+ssh -t vmadmin\@konfusion.bl0rg.net sudo virsh list
+ssh -t vmadmin\@konfusion.bl0rg.net sudo virsh console $vm
+ssh -t vmadmin\@konfusion.bl0rg.net sudo virsh destroy $vm
+ssh -t vmadmin\@konfusion.bl0rg.net sudo virsh shutdown $vm
+ssh -t vmadmin\@konfusion.bl0rg.net sudo virsh start $vm
+ssh -t vmadmin\@konfusion.bl0rg.net sudo virsh start $vm --console
+
+EOF
+  exit(2);
+}
