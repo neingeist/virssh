@@ -13,8 +13,8 @@ Configuration
 2. Give that user sudo permissions for calling virsh, so she may control (all)
    VMs:
 
-      Defaults:vmadmin !requiretty
-      vmadmin ALL = (root) NOPASSWD: /usr/bin/virsh
+      <pre><code>Defaults:vmadmin !requiretty
+      vmadmin ALL = (root) NOPASSWD: /usr/bin/virsh</code></pre>
 
 3. For every one of your users, create a line in vmadmin's .ssh/authorized_keys
    using their SSH public keys:
