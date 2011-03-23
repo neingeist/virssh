@@ -16,7 +16,10 @@ Configuration:
 
 3. For every one of your users, create a line in vmadmin's .ssh/authorized_keys:
 
-   command="/usr/local/bin/virssh myfancyuser",permitopen="localhost:5915",no-X11-forwarding,no-agent-forwarding ssh-rsa AAAAB...== myfancyuser@hjome
+   command="/usr/local/bin/virssh myfancyvm",permitopen="localhost:5915",no-X11-forwarding,no-agent-forwarding ssh-rsa AAAAB...== myfancyuser@hjome
+
+   Instead of specifying only one VM "myfancyvm", you may also specify multiple
+   VMs by regex, for example "(myfancyvm|myothervm)".
 
 Usage:
 
@@ -29,5 +32,5 @@ Usage:
     ssh -t vmadmin@vmserver sudo virsh start myfancyvm
     ssh -t vmadmin@vmserver sudo virsh start myfancyvm --console
 
-  If you use a "permitopen" directive, that user may also use the console to
-  keep an SSH tunnel open to use VNC.
+  If you use a "permitopen" directive, that user may also use the console 
+  command to keep an SSH tunnel open to use VNC.
