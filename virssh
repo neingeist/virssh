@@ -1,9 +1,17 @@
 #!/usr/bin/perl
+#
+# virssh - allow users to control their libvirt VM through SSH.
+#
+# For usage please see README.md.
+#
+
 use strict;
 use warnings;
 
 my $logtag = $0;
 my $vm = $ARGV[0];
+my $HOSTNAME = `hostname -f` || "vmserver"; chomp($HOSTNAME);
+my $USER = $ENV{"USER"} || "vmadmin";
 my $SSH_ORIGINAL_COMMAND = $ENV{"SSH_ORIGINAL_COMMAND"} || "";
 
 if ($SSH_ORIGINAL_COMMAND =~ /^sudo virsh (list|console $vm|destroy $vm|shutdown $vm|start $vm( --console)?)$/s) {
@@ -15,12 +23,12 @@ if ($SSH_ORIGINAL_COMMAND =~ /^sudo virsh (list|console $vm|destroy $vm|shutdown
   print STDERR <<EOF;
 Allowed commands for you are:
 
-ssh -t vmadmin\@konfusion.bl0rg.net sudo virsh list
-ssh -t vmadmin\@konfusion.bl0rg.net sudo virsh console $vm
-ssh -t vmadmin\@konfusion.bl0rg.net sudo virsh destroy $vm
-ssh -t vmadmin\@konfusion.bl0rg.net sudo virsh shutdown $vm
-ssh -t vmadmin\@konfusion.bl0rg.net sudo virsh start $vm
-ssh -t vmadmin\@konfusion.bl0rg.net sudo virsh start $vm --console
+ssh -t $USER\@$HOSTNAME sudo virsh list
+ssh -t $USER\@$HOSTNAME sudo virsh console $vm
+ssh -t $USER\@$HOSTNAME sudo virsh destroy $vm
+ssh -t $USER\@$HOSTNAME sudo virsh shutdown $vm
+ssh -t $USER\@$HOSTNAME sudo virsh start $vm
+ssh -t $USER\@$HOSTNAME sudo virsh start $vm --console
 
 EOF
   exit(2);
