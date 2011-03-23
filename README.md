@@ -2,7 +2,8 @@ virssh - allow users to control their libvirt VM through SSH.
 
 virssh is a simple wrapper around sudo and virsh that allows users to control
 their libvirt VM(s) through SSH. Currently supported is starting/stopping VMs,
-serial console and listing all VMs to get their status.
+serial console and listing all VMs to get their status. Authorization is done
+using SSH public keys.
 
 Configuration:
 
@@ -14,7 +15,8 @@ Configuration:
     Defaults:vmadmin !requiretty
     vmadmin ALL = (root) NOPASSWD: /usr/bin/virsh
 
-3. For every one of your users, create a line in vmadmin's .ssh/authorized_keys:
+3. For every one of your users, create a line in vmadmin's .ssh/authorized_keys
+   using their SSH public keys:
 
    command="/usr/local/bin/virssh myfancyvm",permitopen="localhost:5915",no-X11-forwarding,no-agent-forwarding ssh-rsa AAAAB...== myfancyuser@hjome
 
