@@ -8,15 +8,14 @@ using SSH public keys.
 Configuration
 =============
 
-1. Create a user "vmadmin".
+1. Create a user <pre>vmadmin</pre>.
 
 2. Give that user sudo permissions for calling virsh, so she may control (all)
    VMs:
 
   <pre>
   Defaults:vmadmin !requiretty
-  vmadmin ALL = (root) NOPASSWD: /usr/bin/virsh
-  </pre>
+  vmadmin ALL = (root) NOPASSWD: /usr/bin/virsh</pre>
 
 3. For every one of your users, create a line in vmadmin's .ssh/authorized_keys
    using their SSH public keys:
@@ -37,8 +36,7 @@ Usage
     ssh -t vmadmin@vmserver sudo virsh destroy myfancyvm
     ssh -t vmadmin@vmserver sudo virsh shutdown myfancyvm
     ssh -t vmadmin@vmserver sudo virsh start myfancyvm
-    ssh -t vmadmin@vmserver sudo virsh start myfancyvm --console
-  </pre>
+    ssh -t vmadmin@vmserver sudo virsh start myfancyvm --console</pre>
 
   If you use a "permitopen" directive, that user may also use the console 
   command to keep an SSH tunnel open to use VNC.
